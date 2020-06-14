@@ -17,7 +17,8 @@ import * as constants from './constants';
  * a p5 sketch.  It expects an incoming sketch closure and it can also
  * take an optional node parameter for attaching the generated p5 canvas
  * to a node.  The sketch closure takes the newly created p5 instance as
- * its sole argument and may optionally set <a href="#/p5/preload">preload()</a>, <a href="#/p5/setup">setup()</a>, and/or
+ * its sole argument and may optionally set <a href="#/p5/preload">preload()</a>,
+ * <a href="#/p5/setup">setup()</a>, and/or
  * <a href="#/p5/draw">draw()</a> properties on it for running a sketch.
  *
  * A p5 sketch can run in "global" or "instance" mode:
@@ -46,7 +47,7 @@ class p5 {
      * <a href="#/p5/loadStrings">loadStrings</a>, etc.) should be inside the preload function. If asynchronous
      * loading is preferred, the load methods can instead be called in <a href="#/p5/setup">setup()</a>
      * or anywhere else with the use of a callback parameter.
-     * <br><br>
+     *
      * By default the text "loading..." will be displayed. To make your own
      * loading page, include an HTML element with id "p5_loading" in your
      * page. More information <a href="http://bit.ly/2kQ6Nio">here</a>.
@@ -85,7 +86,7 @@ class p5 {
      * color and to load media such as images and fonts as the program starts.
      * There can only be one <a href="#/p5/setup">setup()</a> function for each program and it shouldn't
      * be called again after its initial execution.
-     * <br><br>
+     *
      * Note: Variables declared within <a href="#/p5/setup">setup()</a> are not accessible within other
      * functions, including <a href="#/p5/draw">draw()</a>.
      *
@@ -116,20 +117,20 @@ class p5 {
      * or <a href="#/p5/noLoop">noLoop()</a> is called. Note if <a href="#/p5/noLoop">noLoop()</a> is called in <a href="#/p5/setup">setup()</a>, <a href="#/p5/draw">draw()</a> will
      * still be executed once before stopping. <a href="#/p5/draw">draw()</a> is called automatically and
      * should never be called explicitly.
-     * <br><br>
+     *
      * It should always be controlled with <a href="#/p5/noLoop">noLoop()</a>, <a href="#/p5/redraw">redraw()</a> and <a href="#/p5/loop">loop()</a>. After
      * <a href="#/p5/noLoop">noLoop()</a> stops the code in <a href="#/p5/draw">draw()</a> from executing, <a href="#/p5/redraw">redraw()</a> causes the
      * code inside <a href="#/p5/draw">draw()</a> to execute once, and <a href="#/p5/loop">loop()</a> will cause the code
      * inside <a href="#/p5/draw">draw()</a> to resume executing continuously.
-     * <br><br>
+     *
      * The number of times <a href="#/p5/draw">draw()</a> executes in each second may be controlled with
      * the <a href="#/p5/frameRate">frameRate()</a> function.
-     * <br><br>
+     *
      * There can only be one <a href="#/p5/draw">draw()</a> function for each sketch, and <a href="#/p5/draw">draw()</a> must
      * exist if you want the code to run continuously, or to process events such
      * as <a href="#/p5/mousePressed">mousePressed()</a>. Sometimes, you might have an empty call to <a href="#/p5/draw">draw()</a> in
      * your program, as shown in the above example.
-     * <br><br>
+     *
      * It is important to note that the drawing coordinate system will be reset
      * at the beginning of each <a href="#/p5/draw">draw()</a> call. If any transformations are performed
      * within <a href="#/p5/draw">draw()</a> (ex: scale, rotate, translate), their effects will be
@@ -201,6 +202,7 @@ class p5 {
       resize: null,
       blur: null
     };
+    this._millisStart = -1;
 
     // States used in the custom random generators
     this._lcg_random_state = null;
@@ -329,6 +331,9 @@ class p5 {
           }
         }
       }
+
+      // Record the time when sketch starts
+      this._millisStart = window.performance.now();
 
       // Short-circuit on this, in case someone used the library in "global"
       // mode earlier

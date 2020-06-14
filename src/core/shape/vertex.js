@@ -18,14 +18,14 @@ let isContour = false;
 let isFirstContour = true;
 
 /**
- * Use the <a href="#/p5/beginContour">beginContour()</a> and <a href="#/p5/endContour">endContour()</a> functions to create negative
- * shapes within shapes such as the center of the letter 'O'. <a href="#/p5/beginContour">beginContour()</a>
+ * Use the <a href="#/p5/beginContour">beginContour()</a> and
+ * <a href="#/p5/endContour">endContour()</a> functions to create negative shapes
+ * within shapes such as the center of the letter 'O'. <a href="#/p5/beginContour">beginContour()</a>
  * begins recording vertices for the shape and <a href="#/p5/endContour">endContour()</a> stops recording.
- * The vertices that define a negative shape must "wind" in the opposite
- * direction from the exterior shape. First draw vertices for the exterior
- * clockwise order, then for internal shapes, draw vertices
+ * The vertices that define a negative shape must "wind" in the opposite direction
+ * from the exterior shape. First draw vertices for the exterior clockwise order, then for internal shapes, draw vertices
  * shape in counter-clockwise.
- * <br><br>
+ *
  * These functions can only be used within a <a href="#/p5/beginShape">beginShape()</a>/<a href="#/p5/endShape">endShape()</a> pair and
  * transformations such as <a href="#/p5/translate">translate()</a>, <a href="#/p5/rotate">rotate()</a>, and <a href="#/p5/scale">scale()</a> do not work
  * within a <a href="#/p5/beginContour">beginContour()</a>/<a href="#/p5/endContour">endContour()</a> pair. It is also not possible to use
@@ -57,7 +57,6 @@ let isFirstContour = true;
  *
  * @alt
  * white rect and smaller grey rect with red outlines in center of canvas.
- *
  */
 p5.prototype.beginContour = function() {
   contourVertices = [];
@@ -71,13 +70,13 @@ p5.prototype.beginContour = function() {
  * <a href="#/p5/endShape">endShape()</a> stops recording. The value of the kind parameter tells it which
  * types of shapes to create from the provided vertices. With no mode
  * specified, the shape can be any irregular polygon.
- * <br><br>
+ *
  * The parameters available for <a href="#/p5/beginShape">beginShape()</a> are POINTS, LINES, TRIANGLES,
  * TRIANGLE_FAN, TRIANGLE_STRIP, QUADS, QUAD_STRIP, and TESS (WebGL only). After calling the
  * <a href="#/p5/beginShape">beginShape()</a> function, a series of <a href="#/p5/vertex">vertex()</a> commands must follow. To stop
  * drawing the shape, call <a href="#/p5/endShape">endShape()</a>. Each shape will be outlined with the
  * current stroke color and filled with the fill color.
- * <br><br>
+ *
  * Transformations such as <a href="#/p5/translate">translate()</a>, <a href="#/p5/rotate">rotate()</a>, and <a href="#/p5/scale">scale()</a> do not work
  * within <a href="#/p5/beginShape">beginShape()</a>. It is also not possible to use other shapes, such as
  * <a href="#/p5/ellipse">ellipse()</a> or <a href="#/p5/rect">rect()</a> within <a href="#/p5/beginShape">beginShape()</a>.
@@ -226,6 +225,7 @@ p5.prototype.beginContour = function() {
  * endShape(CLOSE);
  * </code>
  * </div>
+ *
  * @alt
  * white square-shape with black outline in middle-right of canvas.
  * 4 black points in a square shape in middle-right of canvas.
@@ -238,7 +238,6 @@ p5.prototype.beginContour = function() {
  * 2 white rectangle shapes in mid-right canvas. Both 20x55.
  * 3 side-by-side white rectangles center rect is smaller in mid-right canvas.
  * Thick white l-shape with black outline mid-top-left of canvas.
- *
  */
 p5.prototype.beginShape = function(kind) {
   p5._validateParameters('beginShape', arguments);
@@ -272,7 +271,7 @@ p5.prototype.beginShape = function(kind) {
  * line or shape. For WebGL mode bezierVertex() can be used in 2D
  * as well as 3D mode. 2D mode expects 6 parameters, while 3D mode
  * expects 9 parameters (including z coordinates).
- * <br><br>
+ *
  * The first time bezierVertex() is used within a <a href="#/p5/beginShape">beginShape()</a>
  * call, it must be prefaced with a call to <a href="#/p5/vertex">vertex()</a> to set the first anchor
  * point. This function must be used between <a href="#/p5/beginShape">beginShape()</a> and <a href="#/p5/endShape">endShape()</a>
@@ -299,10 +298,6 @@ p5.prototype.beginShape = function(kind) {
  * </code>
  * </div>
  *
- * @alt
- * crescent-shaped line in middle of canvas. Points facing left.
- *
- * @example
  * <div>
  * <code>
  * beginShape();
@@ -313,10 +308,6 @@ p5.prototype.beginShape = function(kind) {
  * </code>
  * </div>
  *
- * @alt
- * white crescent shape in middle of canvas. Points facing left.
- *
- * @example
  * <div>
  * <code>
  * function setup() {
@@ -350,6 +341,8 @@ p5.prototype.beginShape = function(kind) {
  * </div>
  *
  * @alt
+ * crescent-shaped line in middle of canvas. Points facing left.
+ * white crescent shape in middle of canvas. Points facing left.
  * crescent shape in middle of canvas with another crescent shape on positive z-axis.
  */
 
@@ -399,7 +392,7 @@ p5.prototype.bezierVertex = function(...args) {
  * is no MODE parameter specified to <a href="#/p5/beginShape">beginShape()</a>.
  * For WebGL mode curveVertex() can be used in 2D as well as 3D mode.
  * 2D mode expects 2 parameters, while 3D mode expects 3 parameters.
- * <br><br>
+ *
  * The first and last points in a series of curveVertex() lines will be used to
  * guide the beginning and end of a the curve. A minimum of four
  * points is required to draw a tiny curve between the second and
@@ -434,10 +427,10 @@ p5.prototype.bezierVertex = function(...args) {
  * </code>
  * </div>
  *
- *
  * @alt
  * Upside-down u-shape line, mid canvas. left point extends beyond canvas view.
  */
+
 /**
  * @method curveVertex
  * @param {Number} x
@@ -490,7 +483,6 @@ p5.prototype.bezierVertex = function(...args) {
  *
  * @alt
  * Upside-down u-shape line, mid canvas with the same shape in positive z-axis.
- *
  */
 p5.prototype.curveVertex = function(...args) {
   p5._validateParameters('curveVertex', args);
@@ -511,7 +503,7 @@ p5.prototype.curveVertex = function(...args) {
  * direction from the exterior shape. First draw vertices for the exterior
  * clockwise order, then for internal shapes, draw vertices
  * shape in counter-clockwise.
- * <br><br>
+ *
  * These functions can only be used within a <a href="#/p5/beginShape">beginShape()</a>/<a href="#/p5/endShape">endShape()</a> pair and
  * transformations such as <a href="#/p5/translate">translate()</a>, <a href="#/p5/rotate">rotate()</a>, and <a href="#/p5/scale">scale()</a> do not work
  * within a <a href="#/p5/beginContour">beginContour()</a>/<a href="#/p5/endContour">endContour()</a> pair. It is also not possible to use
@@ -543,7 +535,6 @@ p5.prototype.curveVertex = function(...args) {
  *
  * @alt
  * white rect and smaller grey rect with red outlines in center of canvas.
- *
  */
 p5.prototype.endContour = function() {
   const vert = contourVertices[0].slice(); // copy all data
@@ -594,7 +585,6 @@ p5.prototype.endContour = function() {
  *
  * @alt
  * Triangle line shape with smallest interior angle on bottom and upside-down L.
- *
  */
 p5.prototype.endShape = function(mode) {
   p5._validateParameters('endShape', arguments);
@@ -658,7 +648,7 @@ p5.prototype.endShape = function(mode) {
  * For WebGL mode quadraticVertex() can be used in 2D as well as 3D mode.
  * 2D mode expects 4 parameters, while 3D mode expects 6 parameters
  * (including z coordinates).
- * <br><br>
+ *
  * This function must be used between <a href="#/p5/beginShape">beginShape()</a> and <a href="#/p5/endShape">endShape()</a>
  * and only when there is no MODE or POINTS parameter specified to
  * <a href="#/p5/beginShape">beginShape()</a>.
@@ -712,7 +702,6 @@ p5.prototype.endShape = function(mode) {
  * @alt
  * arched-shaped black line with 4 pixel thick stroke weight.
  * backwards s-shaped black line with 4 pixel thick stroke weight.
- *
  */
 
 /**
@@ -938,7 +927,6 @@ p5.prototype.quadraticVertex = function(...args) {
  * 8 points making a star.
  * 8 points making 4 lines.
  * A rotating 3D shape with a hollow section in the middle.
- *
  */
 /**
  * @method vertex

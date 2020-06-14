@@ -123,11 +123,17 @@ p5.RendererGL.prototype.endShape = function(
     return this;
   }
   this._processVertices(...arguments);
-
-  if (this.immediateMode.geometry.vertices.length > 1) {
-    this._drawImmediateFill();
-    this._drawImmediateStroke();
+  if (this._doFill) {
+    if (this.immediateMode.geometry.vertices.length > 1) {
+      this._drawImmediateFill();
+    }
   }
+  if (this._doStroke) {
+    if (this.immediateMode.geometry.lineVertices.length > 1) {
+      this._drawImmediateStroke();
+    }
+  }
+
   this.isBezier = false;
   this.isQuadratic = false;
   this.isCurve = false;
@@ -186,7 +192,7 @@ p5.RendererGL.prototype._calculateEdges = function(
   let i = 0;
   switch (shapeMode) {
     case constants.TRIANGLE_STRIP:
-      for (i = 0; i < verts - 2; i++) {
+      for (i = 0; i < verts.length - 2; i++) {
         res.push([i, i + 1]);
         res.push([i, i + 2]);
       }

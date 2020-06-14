@@ -23,9 +23,10 @@ import p5 from '../core/main';
  *
  * @alt
  * Current day is displayed
- *
  */
-p5.prototype.day = () => new Date().getDate();
+p5.prototype.day = function() {
+  return new Date().getDate();
+};
 
 /**
  * p5.js communicates with the clock on your computer. The <a href="#/p5/hour">hour()</a> function
@@ -43,9 +44,10 @@ p5.prototype.day = () => new Date().getDate();
  *
  * @alt
  * Current hour is displayed
- *
  */
-p5.prototype.hour = () => new Date().getHours();
+p5.prototype.hour = function() {
+  return new Date().getHours();
+};
 
 /**
  * p5.js communicates with the clock on your computer. The <a href="#/p5/minute">minute()</a> function
@@ -63,17 +65,18 @@ p5.prototype.hour = () => new Date().getHours();
  *
  * @alt
  * Current minute is displayed
- *
  */
-p5.prototype.minute = () => new Date().getMinutes();
+p5.prototype.minute = function() {
+  return new Date().getMinutes();
+};
 
 /**
  * Returns the number of milliseconds (thousandths of a second) since
- * starting the program. This information is often used for timing events and
- * animation sequences.
+ * starting the sketch (when `setup()` is called). This information is often
+ * used for timing events and animation sequences.
  *
  * @method millis
- * @return {Number} the number of milliseconds since starting the program
+ * @return {Number} the number of milliseconds since starting the sketch
  * @example
  * <div>
  * <code>
@@ -83,10 +86,16 @@ p5.prototype.minute = () => new Date().getMinutes();
  * </div>
  *
  * @alt
- * number of milliseconds since program has started displayed
- *
+ * number of milliseconds since sketch has started displayed
  */
-p5.prototype.millis = () => window.performance.now();
+p5.prototype.millis = function() {
+  if (this._millisStart === -1) {
+    // Sketch has not started
+    return 0;
+  } else {
+    return window.performance.now() - this._millisStart;
+  }
+};
 
 /**
  * p5.js communicates with the clock on your computer. The <a href="#/p5/month">month()</a> function
@@ -104,11 +113,11 @@ p5.prototype.millis = () => window.performance.now();
  *
  * @alt
  * Current month is displayed
- *
  */
-p5.prototype.month = () =>
+p5.prototype.month = function() {
   //January is 0!
-  new Date().getMonth() + 1;
+  return new Date().getMonth() + 1;
+};
 
 /**
  * p5.js communicates with the clock on your computer. The <a href="#/p5/second">second()</a> function
@@ -126,9 +135,10 @@ p5.prototype.month = () =>
  *
  * @alt
  * Current second is displayed
- *
  */
-p5.prototype.second = () => new Date().getSeconds();
+p5.prototype.second = function() {
+  return new Date().getSeconds();
+};
 
 /**
  * p5.js communicates with the clock on your computer. The <a href="#/p5/year">year()</a> function
@@ -146,8 +156,9 @@ p5.prototype.second = () => new Date().getSeconds();
  *
  * @alt
  * Current year is displayed
- *
  */
-p5.prototype.year = () => new Date().getFullYear();
+p5.prototype.year = function() {
+  return new Date().getFullYear();
+};
 
 export default p5;

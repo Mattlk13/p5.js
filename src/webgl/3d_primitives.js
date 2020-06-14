@@ -353,7 +353,7 @@ const _truncatedCone = function(
 
     y -= height / 2; //shift coordiate origin to the center of object
     for (ii = 0; ii < detailX; ++ii) {
-      const u = ii / detailX;
+      const u = ii / (detailX - 1);
       const ur = 2 * Math.PI * u;
       const sur = Math.sin(ur);
       const cur = Math.cos(ur);
@@ -740,7 +740,6 @@ p5.prototype.cone = function(radius, height, detailX, detailY, cap) {
  * }
  * </code>
  * </div>
- *
  */
 p5.prototype.ellipsoid = function(radiusX, radiusY, radiusZ, detailX, detailY) {
   this._assert3d('ellipsoid');

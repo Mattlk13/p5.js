@@ -18,7 +18,7 @@ var spec = {
   data: ['p5.TypedDict', 'local_storage'],
   dom: ['dom'],
   events: ['keyboard', 'mouse', 'touch', 'acceleration'],
-  image: ['p5.Image', 'loading', 'pixels', 'filters'],
+  image: ['p5.Image', 'loading', 'pixels', 'filters', 'downloading'],
   io: [
     'files',
     'loadBytes',
@@ -26,6 +26,7 @@ var spec = {
     'loadXML',
     'loadJSON',
     'loadTable',
+    'saveTable',
     'loadImage',
     'loadModel',
     'loadShader'

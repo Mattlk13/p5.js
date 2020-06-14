@@ -21,7 +21,8 @@ import p5 from '../core/main';
  * is rotating to the right side of the sketch, so the object would seem like
  * moving to the left.
  *
- * See this <a href = "https://www.openprocessing.org/sketch/740258">example</a> to view the position of your camera.
+ * See this <a href = "https://www.openprocessing.org/sketch/740258">example</a>
+ * to view the position of your camera.
  *
  * When called with no arguments, this function creates a default camera
  * equivalent to
@@ -101,7 +102,8 @@ import p5 from '../core/main';
  * </div>
  * @alt
  * White square repeatedly grows to fill canvas and then shrinks.
- *
+ * An interactive example of a red cube with 3 sliders for moving it across x, y,
+ * z axis and 3 sliders for shifting it's center.
  */
 p5.prototype.camera = function(...args) {
   this._assert3d('camera');
@@ -162,7 +164,6 @@ p5.prototype.camera = function(...args) {
  *
  * @alt
  * two colored 3D boxes move back and forth, rotating as mouse is dragged.
- *
  */
 p5.prototype.perspective = function(...args) {
   this._assert3d('perspective');
@@ -219,7 +220,6 @@ p5.prototype.perspective = function(...args) {
  *
  * @alt
  * two 3D boxes move back and forth along same plane, rotating as mouse is dragged.
- *
  */
 p5.prototype.ortho = function(...args) {
   this._assert3d('ortho');
@@ -282,7 +282,6 @@ p5.prototype.ortho = function(...args) {
  *
  * @alt
  * two 3D boxes move back and forth along same plane, rotating as mouse is dragged.
- *
  */
 p5.prototype.frustum = function(...args) {
   this._assert3d('frustum');
@@ -302,6 +301,26 @@ p5.prototype.frustum = function(...args) {
  * @method createCamera
  * @return {p5.Camera} The newly created camera object.
  * @for p5
+ * @example
+ * <div><code>
+ * // Creates a camera object and animates it around a box.
+ * let camera;
+ * function setup() {
+ *   createCanvas(100, 100, WEBGL);
+ *   background(0);
+ *   camera = createCamera();
+ *   setCamera(camera);
+ * }
+ *
+ * function draw() {
+ *   camera.lookAt(0, 0, 0);
+ *   camera.setPosition(sin(frameCount / 60) * 200, 0, 100);
+ *   box(20);
+ * }
+ * </code></div>
+ *
+ * @alt
+ * An example that creates a camera and moves it around the box.
  */
 p5.prototype.createCamera = function() {
   this._assert3d('createCamera');
@@ -331,7 +350,6 @@ p5.prototype.createCamera = function() {
  * to create multiple cameras, in which case the current camera
  * can be set through the <a href="#/p5/setCamera">setCamera()</a> method.
  *
- *
  * Note:
  * The methods below operate in two coordinate systems: the 'world' coordinate
  * system describe positions in terms of their relationship to the origin along
@@ -341,7 +359,6 @@ p5.prototype.createCamera = function() {
  * for instance, moves the camera along its own axes, whereas the
  * <a href="#/p5.Camera/setPosition">setPosition()</a>
  * method sets the camera's position in world-space.
- *
  *
  * @class p5.Camera
  * @param {rendererGL} rendererGL instance of WebGL renderer
@@ -391,7 +408,6 @@ p5.prototype.createCamera = function() {
  *
  * @alt
  * camera view pans left and right across a series of rotating 3D boxes.
- *
  */
 p5.Camera = function(renderer) {
   this._renderer = renderer;
@@ -702,7 +718,6 @@ p5.Camera.prototype._rotateView = function(a, x, y, z) {
  *
  * @alt
  * camera view pans left and right across a series of rotating 3D boxes.
- *
  */
 p5.Camera.prototype.pan = function(amount) {
   const local = this._getLocalAxes();

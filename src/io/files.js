@@ -13,7 +13,9 @@ import 'whatwg-fetch';
 import 'es6-promise/auto';
 import fetchJsonp from 'fetch-jsonp';
 import fileSaver from 'file-saver';
-import '../core/error_helpers';
+import '../core/friendly_errors/validate_params';
+import '../core/friendly_errors/file_errors';
+import '../core/friendly_errors/fes_core';
 
 /**
  * Loads a JSON file from a file or a URL, and returns an Object.
@@ -40,8 +42,8 @@ import '../core/error_helpers';
  * @return {Object|Array}             JSON data
  * @example
  *
- * <p>Calling <a href="#/p5/loadJSON">loadJSON()</a> inside <a href="#/p5/preload">preload()</a> guarantees to complete the
- * operation before <a href="#/p5/setup">setup()</a> and <a href="#/p5/draw">draw()</a> are called.</p>
+ * Calling <a href="#/p5/loadJSON">loadJSON()</a> inside <a href="#/p5/preload">preload()</a> guarantees to complete the
+ * operation before <a href="#/p5/setup">setup()</a> and <a href="#/p5/draw">draw()</a> are called.
  *
  * <div><code>
  * // Examples use USGS Earthquake API:
@@ -70,9 +72,8 @@ import '../core/error_helpers';
  * }
  * </code></div>
  *
- *
- * <p>Outside of preload(), you may supply a callback function to handle the
- * object:</p>
+ * Outside of preload(), you may supply a callback function to handle the
+ * object:
  * <div><code>
  * function setup() {
  *   noLoop();
@@ -99,7 +100,6 @@ import '../core/error_helpers';
  * @alt
  * 50x50 ellipse that changes from black to white depending on the current humidity
  * 50x50 ellipse that changes from black to white depending on the current humidity
- *
  */
 /**
  * @method loadJSON
@@ -184,12 +184,12 @@ p5.prototype.loadJSON = function(...args) {
  * Reads the contents of a file and creates a String array of its individual
  * lines. If the name of the file is used as the parameter, as in the above
  * example, the file must be located in the sketch directory/folder.
- * <br><br>
+ *
  * Alternatively, the file maybe be loaded from anywhere on the local
  * computer using an absolute path (something that starts with / on Unix and
  * Linux, or a drive letter on Windows), or the filename parameter can be a
  * URL for a file found on a network.
- * <br><br>
+ *
  * This method is asynchronous, meaning it may not finish before the next
  * line in your sketch is executed.
  *
@@ -205,8 +205,8 @@ p5.prototype.loadJSON = function(...args) {
  * @return {String[]}            Array of Strings
  * @example
  *
- * <p>Calling loadStrings() inside <a href="#/p5/preload">preload()</a> guarantees to complete the
- * operation before <a href="#/p5/setup">setup()</a> and <a href="#/p5/draw">draw()</a> are called.</p>
+ * Calling loadStrings() inside <a href="#/p5/preload">preload()</a> guarantees to complete the
+ * operation before <a href="#/p5/setup">setup()</a> and <a href="#/p5/draw">draw()</a> are called.
  *
  * <div><code>
  * let result;
@@ -220,8 +220,8 @@ p5.prototype.loadJSON = function(...args) {
  * }
  * </code></div>
  *
- * <p>Outside of preload(), you may supply a callback function to handle the
- * object:</p>
+ * Outside of preload(), you may supply a callback function to handle the
+ * object:
  *
  * <div><code>
  * function setup() {
@@ -237,7 +237,6 @@ p5.prototype.loadJSON = function(...args) {
  * @alt
  * randomly generated text from a file, for example "i smell like butter"
  * randomly generated text from a file, for example "i have three feet"
- *
  */
 p5.prototype.loadStrings = function(...args) {
   p5._validateParameters('loadStrings', args);
@@ -292,50 +291,33 @@ p5.prototype.loadStrings = function(...args) {
 };
 
 /**
- * <p>Reads the contents of a file or URL and creates a <a href="#/p5.Table">p5.Table</a> object with
+ * Reads the contents of a file or URL and creates a <a href="#/p5.Table">p5.Table</a> object with
  * its values. If a file is specified, it must be located in the sketch's
  * "data" folder. The filename parameter can also be a URL to a file found
  * online. By default, the file is assumed to be comma-separated (in CSV
  * format). Table only looks for a header row if the 'header' option is
- * included.</p>
+ * included.
  *
- * <p>Possible options include:
- * <ul>
- * <li>csv - parse the table as comma-separated values</li>
- * <li>tsv - parse the table as tab-separated values</li>
- * <li>header - this table has a header (title) row</li>
- * </ul>
- * </p>
- *
- * <p>When passing in multiple options, pass them in as separate parameters,
- * seperated by commas. For example:
- * <br><br>
- * <code>
- * loadTable('my_csv_file.csv', 'csv', 'header');
- * </code>
- * </p>
- *
- * <p> All files loaded and saved use UTF-8 encoding.</p>
- *
- * <p>This method is asynchronous, meaning it may not finish before the next
+ * This method is asynchronous, meaning it may not finish before the next
  * line in your sketch is executed. Calling <a href="#/p5/loadTable">loadTable()</a> inside <a href="#/p5/preload">preload()</a>
  * guarantees to complete the operation before <a href="#/p5/setup">setup()</a> and <a href="#/p5/draw">draw()</a> are called.
- * <p>Outside of <a href="#/p5/preload">preload()</a>, you may supply a callback function to handle the
- * object:</p>
- * </p>
+ * Outside of <a href="#/p5/preload">preload()</a>, you may supply a callback function to handle the
+ * object:
  *
- * This method is suitable for fetching files up to size of 64MB.
+ * All files loaded and saved use UTF-8 encoding. This method is suitable for fetching files up to size of 64MB.
  * @method loadTable
- * @param  {String}         filename   name of the file or URL to load
- * @param  {String}         options  "header" "csv" "tsv"
- * @param  {function}       [callback] function to be executed after
- *                                     <a href="#/p5/loadTable">loadTable()</a> completes. On success, the
- *                                     <a href="#/p5.Table">Table</a> object is passed in as the
- *                                     first argument.
- * @param  {function}  [errorCallback] function to be executed if
- *                                     there is an error, response is passed
- *                                     in as first argument
- * @return {Object}                    <a href="#/p5.Table">Table</a> object containing data
+ * @param  {String}         filename    name of the file or URL to load
+ * @param  {String}         [extension] parse the table by comma-separated values "csv", semicolon-separated
+ *                                      values "ssv", or tab-separated values "tsv"
+ * @param  {String}         [header]    "header" to indicate table has header row
+ * @param  {function}       [callback]  function to be executed after
+ *                                      <a href="#/p5/loadTable">loadTable()</a> completes. On success, the
+ *                                      <a href="#/p5.Table">Table</a> object is passed in as the
+ *                                      first argument.
+ * @param  {function}  [errorCallback]  function to be executed if
+ *                                      there is an error, response is passed
+ *                                      in as first argument
+ * @return {Object}                     <a href="#/p5.Table">Table</a> object containing data
  *
  * @example
  * <div class='norender'>
@@ -379,26 +361,21 @@ p5.prototype.loadStrings = function(...args) {
  * @alt
  * randomly generated text from a file, for example "i smell like butter"
  * randomly generated text from a file, for example "i have three feet"
- *
- */
-/**
- * @method loadTable
- * @param  {String}         filename
- * @param  {function}       [callback]
- * @param  {function}  [errorCallback]
- * @return {Object}
  */
 p5.prototype.loadTable = function(path) {
+  // p5._validateParameters('loadTable', arguments);
   let callback;
   let errorCallback;
   const options = [];
   let header = false;
   const ext = path.substring(path.lastIndexOf('.') + 1, path.length);
-  let sep = ',';
-  let separatorSet = false;
 
-  if (ext === 'tsv') {
-    //Only need to check extension is tsv because csv is default
+  let sep;
+  if (ext === 'csv') {
+    sep = ',';
+  } else if (ext === 'ssv') {
+    sep = ';';
+  } else if (ext === 'tsv') {
     sep = '\t';
   }
 
@@ -415,22 +392,16 @@ p5.prototype.loadTable = function(path) {
         header = true;
       }
       if (arguments[i] === 'csv') {
-        if (separatorSet) {
-          throw new Error('Cannot set multiple separator types.');
-        } else {
-          sep = ',';
-          separatorSet = true;
-        }
+        sep = ',';
+      } else if (arguments[i] === 'ssv') {
+        sep = ';';
       } else if (arguments[i] === 'tsv') {
-        if (separatorSet) {
-          throw new Error('Cannot set multiple separator types.');
-        } else {
-          sep = '\t';
-          separatorSet = true;
-        }
+        sep = '\t';
       }
     }
   }
+
+  console.log('SEP IS ' + sep);
 
   const t = new p5.Table();
 
@@ -665,7 +636,6 @@ function makeObject(row, headers) {
  *
  * @alt
  * no image displayed
- *
  */
 p5.prototype.loadXML = function(...args) {
   const ret = new p5.XML();
@@ -739,7 +709,6 @@ p5.prototype.loadXML = function(...args) {
  *
  * @alt
  * no image displayed
- *
  */
 p5.prototype.loadBytes = function(file, callback, errorCallback) {
   const ret = {};
@@ -898,9 +867,8 @@ p5.prototype.httpGet = function() {
  * </code>
  * </div>
  *
- *
  * <div><code>
- * let url = 'https://invalidURL'; // A bad URL that will cause errors
+ * let url = 'ttps://invalidURL'; // A bad URL that will cause errors
  * let postData = { title: 'p5 Clicked!', body: 'p5.js is way cool.' };
  *
  * function setup() {
@@ -929,7 +897,6 @@ p5.prototype.httpGet = function() {
  *   );
  * }
  * </code></div>
- *
  */
 /**
  * @method httpPost
@@ -1278,6 +1245,25 @@ p5.PrintWriter = function(filename, extension) {
    * writer.close();
    * </code>
    * </div>
+   * <div>
+   * <code>
+   * function setup() {
+   *   createCanvas(100, 100);
+   *   button = createButton('SAVE FILE');
+   *   button.position(21, 40);
+   *   button.mousePressed(createFile);
+   * }
+   *
+   * function createFile() {
+   *   // creates a file called 'newFile.txt'
+   *   let writer = createWriter('newFile.txt');
+   *   // write 'Hello world!'' to the file
+   *   writer.write(['Hello world!']);
+   *   // close the PrintWriter and save the file
+   *   writer.close();
+   * }
+   * </code>
+   * </div>
    */
   this.write = function(data) {
     this.content += data;
@@ -1311,12 +1297,10 @@ p5.PrintWriter = function(filename, extension) {
    * }
    *
    * function draw() {
-   *   // print all mouseX and mouseY coordinates to the stream
    *   writer.print([mouseX, mouseY]);
    * }
    *
    * function mouseClicked() {
-   *   // close the PrintWriter and save the file
    *   writer.close();
    * }
    * </code>
@@ -1338,6 +1322,22 @@ p5.PrintWriter = function(filename, extension) {
    * // close writer
    * writer.close();
    * </code></div>
+   * <div>
+   * <code>
+   * function setup() {
+   *   button = createButton('CLEAR ME');
+   *   button.position(21, 40);
+   *   button.mousePressed(createFile);
+   * }
+   *
+   * function createFile() {
+   *   let writer = createWriter('newFile.txt');
+   *   writer.write(['clear me']);
+   *   writer.clear();
+   *   writer.close();
+   * }
+   * </code>
+   * </div>
    *
    */
   this.clear = function() {
@@ -1393,44 +1393,65 @@ p5.PrintWriter = function(filename, extension) {
 // filename, [extension] [canvas] --> saveImage
 
 /**
- *  <p>Save an image, text, json, csv, wav, or html. Prompts download to
- *  the client's computer. <b>Note that it is not recommended to call <a href="#/p5/save">save()</a>
- *  within draw if it's looping, as the <a href="#/p5/save">save()</a> function will open a new save
- *  dialog every frame.</b></p>
- *  <p>The default behavior is to save the canvas as an image. You can
- *  optionally specify a filename.
- *  For example:</p>
- * <pre class='language-javascript'><code>
- * save();
- * save('myCanvas.jpg'); // save a specific canvas with a filename
- * </code></pre>
+ *  Saves a given element(image, text, json, csv, wav, or html) to the client's
+ *  computer. The first parameter can be a pointer to element we want to save.
+ *  The element can be one of <a href="#/p5.Element">p5.Element</a>,an Array of
+ *  Strings, an Array of JSON, a JSON object, a <a href="#/p5.Table">p5.Table
+ *  </a>, a <a href="#/p5.Image">p5.Image</a>, or a p5.SoundFile (requires
+ *  p5.sound). The second parameter is a filename (including extension).The
+ *  third parameter is for options specific to this type of object. This method
+ *  will save a file that fits the given parameters.
+ *  If it is called without specifying an element, by default it will save the
+ *  whole canvas as an image file. You can optionally specify a filename as
+ *  the first parameter in such a case.
+ *  **Note that it is not recommended to
+ *  call this method within draw, as it will open a new save dialog on every
+ *  render.**
  *
- *  <p>Alternately, the first parameter can be a pointer to a canvas
- *  <a href="#/p5.Element">p5.Element</a>, an Array of Strings,
- *  an Array of JSON, a JSON object, a <a href="#/p5.Table">p5.Table</a>, a <a href="#/p5.Image">p5.Image</a>, or a
- *  p5.SoundFile (requires p5.sound). The second parameter is a filename
- *  (including extension). The third parameter is for options specific
- *  to this type of object. This method will save a file that fits the
- *  given parameters. For example:</p>
+ * @method save
+ * @param  {Object|String} [objectOrFilename]  If filename is provided, will
+ *                                             save canvas as an image with
+ *                                             either png or jpg extension
+ *                                             depending on the filename.
+ *                                             If object is provided, will
+ *                                             save depending on the object
+ *                                             and filename (see examples
+ *                                             above).
+ * @param  {String} [filename] If an object is provided as the first
+ *                               parameter, then the second parameter
+ *                               indicates the filename,
+ *                               and should include an appropriate
+ *                               file extension (see examples above).
+ * @param  {Boolean|String} [options]  Additional options depend on
+ *                            filetype. For example, when saving JSON,
+ *                            <code>true</code> indicates that the
+ *                            output will be optimized for filesize,
+ *                            rather than readability.
  *
- * <pre class='language-javascript'><code>
- * // Saves canvas as an image
- * save('myCanvas.jpg');
- *
- * // Saves pImage as a png image
- * let img = createImage(10, 10);
- * save(img, 'my.png');
- *
- * // Saves canvas as an image
- * let cnv = createCanvas(100, 100);
+ * @example
+ * <div class="norender"><code>
+ * // Saves the canvas as an image
+ * cnv = createCanvas(300, 300);
  * save(cnv, 'myCanvas.jpg');
  *
+ * // Saves the canvas as an image by default
+ * save('myCanvas.jpg');
+ * </code></div>
+ *
+ *  <div class="norender"><code>
+ * // Saves p5.Image as an image
+ * img = createImage(10, 10);
+ * save(img, 'myImage.png');
+ * </code></div>
+ *
+ * <div class="norender"><code>
  * // Saves p5.Renderer object as an image
- * let gb = createGraphics(100, 100);
- * save(gb, 'myGraphics.jpg');
+ * obj = createGraphics(100, 100);
+ * save(obj, 'myObject.png');
+ * </code></div>
  *
+ * <div class="norender"><code>
  * let myTable = new p5.Table();
- *
  * // Saves table as html file
  * save(myTable, 'myTable.html');
  *
@@ -1439,7 +1460,9 @@ p5.PrintWriter = function(filename, extension) {
  *
  * // Tab Separated Values
  * save(myTable, 'myTable.tsv');
+ * </code></div>
  *
+ * <div class="norender"><code>
  * let myJSON = { a: 1, b: true };
  *
  * // Saves pretty JSON
@@ -1447,32 +1470,23 @@ p5.PrintWriter = function(filename, extension) {
  *
  * // Optimizes JSON filesize
  * save(myJSON, 'my.json', true);
+ * </code></div>
  *
- * // Saves array of strings to a text file with line breaks after each item
+ * <div class="norender"><code>
+ * // Saves array of strings to text file with line breaks after each item
  * let arrayOfStrings = ['a', 'b'];
  * save(arrayOfStrings, 'my.txt');
- * </code></pre>
+ * </code></div>
  *
- *  @method save
- *  @param  {Object|String} [objectOrFilename]  If filename is provided, will
- *                                             save canvas as an image with
- *                                             either png or jpg extension
- *                                             depending on the filename.
- *                                             If object is provided, will
- *                                             save depending on the object
- *                                             and filename (see examples
- *                                             above).
- *  @param  {String} [filename] If an object is provided as the first
- *                               parameter, then the second parameter
- *                               indicates the filename,
- *                               and should include an appropriate
- *                               file extension (see examples above).
- *  @param  {Boolean|String} [options]  Additional options depend on
- *                            filetype. For example, when saving JSON,
- *                            <code>true</code> indicates that the
- *                            output will be optimized for filesize,
- *                            rather than readability.
+ * @alt
+ * An example for saving a canvas as an image.
+ * An example for saving a p5.Image element as an image.
+ * An example for saving a p5.Renderer element.
+ * An example showing how to save a table in formats of HTML, CSV and TSV.
+ * An example for saving JSON to a txt file with some extra arguments.
+ * An example for saving an array of strings to text file with line breaks.
  */
+
 p5.prototype.save = function(object, _filename, _options) {
   // parse the arguments and figure out which things we are saving
   const args = arguments;
@@ -1562,7 +1576,6 @@ p5.prototype.save = function(object, _filename, _options) {
  *
  * @alt
  * no image displayed
- *
  */
 p5.prototype.saveJSON = function(json, filename, opt) {
   p5._validateParameters('saveJSON', arguments);
@@ -1617,7 +1630,6 @@ p5.prototype.saveJSONArray = p5.prototype.saveJSON;
  *
  * @alt
  * no image displayed
- *
  */
 p5.prototype.saveStrings = function(list, filename, extension, isCRLF) {
   p5._validateParameters('saveStrings', arguments);
@@ -1681,7 +1693,6 @@ function escapeHelper(content) {
  *
  * @alt
  * no image displayed
- *
  */
 p5.prototype.saveTable = function(table, filename, options) {
   p5._validateParameters('saveTable', arguments);

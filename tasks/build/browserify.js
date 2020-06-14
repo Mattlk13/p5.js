@@ -36,7 +36,12 @@ module.exports = function(grunt) {
       });
 
       if (isMin) {
-        browseified = browseified.exclude('../../docs/reference/data.json');
+        browseified = browseified
+          .exclude('../../docs/reference/data.json')
+          .exclude('../../../docs/parameterData.json')
+          .exclude('../../translations')
+          .ignore('i18next')
+          .ignore('i18next-browser-languagedetector');
       }
 
       const babelifyOpts = { plugins: ['static-fs'] };

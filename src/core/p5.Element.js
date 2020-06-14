@@ -60,24 +60,27 @@ p5.Element = function(elt, pInst) {
  *
  * @example
  * <div class="norender notest"><code>
- * // in the html file:
+ * // Add the following comment to html file.
  * // &lt;div id="myContainer">&lt;/div>
  *
- * // in the js file:
+ * // The js code
  * let cnv = createCanvas(100, 100);
  * cnv.parent('myContainer');
  * </code></div>
+ *
  * <div class='norender'><code>
  * let div0 = createDiv('this is the parent');
  * let div1 = createDiv('this is the child');
  * div1.parent(div0); // use p5.Element
  * </code></div>
+ *
  * <div class='norender'><code>
  * let div0 = createDiv('this is the parent');
  * div0.id('apples');
  * let div1 = createDiv('this is the child');
  * div1.parent('apples'); // use id
  * </code></div>
+ *
  * <div class='norender notest'><code>
  * let elt = document.getElementById('myParentDiv');
  * let div1 = createDiv('this is the child');
@@ -90,7 +93,6 @@ p5.Element = function(elt, pInst) {
 /**
  * @method parent
  * @return {p5.Element}
- *
  */
 p5.Element.prototype.parent = function(p) {
   if (typeof p === 'undefined') {
@@ -185,11 +187,10 @@ p5.Element.prototype.class = function(c) {
 };
 
 /**
- * The .<a href="#/p5.Element/mousePressed">mousePressed()</a> function is called once after every time a
- * mouse button is pressed over the element.
- * Some mobile browsers may also trigger this event on a touch screen,
- * if the user performs a quick tap.
- * This can be used to attach element specific event listeners.
+ * The .<a href="#/p5.Element/mousePressed">mousePressed()</a> function is called
+ * once after every time a mouse button is pressed over the element. Some mobile
+ * browsers may also trigger this event on a touch screen, if the user performs
+ * a quick tap. This can be used to attach element specific event listeners.
  *
  * @method mousePressed
  * @param  {Function|Boolean} fxn function to be fired when mouse is
@@ -199,9 +200,7 @@ p5.Element.prototype.class = function(c) {
  * @chainable
  * @example
  * <div class='norender'><code>
- * let cnv;
- * let d;
- * let g;
+ * let cnv, d, g;
  * function setup() {
  *   cnv = createCanvas(100, 100);
  *   cnv.mousePressed(changeGray); // attach listener for
@@ -228,7 +227,6 @@ p5.Element.prototype.class = function(c) {
  *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.mousePressed = function(fxn) {
   // Prepend the mouse property setters to the event-listener.
@@ -258,9 +256,7 @@ p5.Element.prototype.mousePressed = function(fxn) {
  * @return {p5.Element}
  * @example
  * <div class='norender'><code>
- * let cnv;
- * let d;
- * let g;
+ * let cnv, d, g;
  * function setup() {
  *   cnv = createCanvas(100, 100);
  *   cnv.doubleClicked(changeGray); // attach listener for
@@ -287,7 +283,6 @@ p5.Element.prototype.mousePressed = function(fxn) {
  *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.doubleClicked = function(fxn) {
   p5.Element._adjustListener('dblclick', fxn, this);
@@ -295,17 +290,17 @@ p5.Element.prototype.doubleClicked = function(fxn) {
 };
 
 /**
- * The .<a href="#/p5.Element/mouseWheel">mouseWheel()</a> function is called once after every time a
- * mouse wheel is scrolled over the element. This can be used to
- * attach element specific event listeners.
- * <br><br>
+ * The <a href="#/p5.Element/mouseWheel">mouseWheel()</a> function is called
+ * once after every time a mouse wheel is scrolled over the element. This can
+ * be used to attach element specific event listeners.
+ *
  * The function accepts a callback function as argument which will be executed
  * when the `wheel` event is triggered on the element, the callback function is
  * passed one argument `event`. The `event.deltaY` property returns negative
  * values if the mouse wheel is rotated up or away from the user and positive
  * in the other direction. The `event.deltaX` does the same as `event.deltaY`
  * except it reads the horizontal wheel scroll of the mouse wheel.
- * <br><br>
+ *
  * On OS X with "natural" scrolling enabled, the `event.deltaY` values are
  * reversed.
  *
@@ -317,9 +312,7 @@ p5.Element.prototype.doubleClicked = function(fxn) {
  * @chainable
  * @example
  * <div class='norender'><code>
- * let cnv;
- * let d;
- * let g;
+ * let cnv, d, g;
  * function setup() {
  *   cnv = createCanvas(100, 100);
  *   cnv.mouseWheel(changeSize); // attach listener for
@@ -350,10 +343,8 @@ p5.Element.prototype.doubleClicked = function(fxn) {
  * }
  * </code></div>
  *
- *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.mouseWheel = function(fxn) {
   p5.Element._adjustListener('wheel', fxn, this);
@@ -361,11 +352,10 @@ p5.Element.prototype.mouseWheel = function(fxn) {
 };
 
 /**
- * The .<a href="#/p5.Element/mouseReleased">mouseReleased()</a> function is called once after every time a
- * mouse button is released over the element.
- * Some mobile browsers may also trigger this event on a touch screen,
- * if the user performs a quick tap.
- * This can be used to attach element specific event listeners.
+ * The <a href="#/p5.Element/mouseReleased">mouseReleased()</a> function is
+ * called once after every time a mouse button is released over the element.
+ * Some mobile browsers may also trigger this event on a touch screen, if the
+ * user performs a quick tap. This can be used to attach element specific event listeners.
  *
  * @method mouseReleased
  * @param  {Function|Boolean} fxn function to be fired when mouse is
@@ -375,9 +365,7 @@ p5.Element.prototype.mouseWheel = function(fxn) {
  * @chainable
  * @example
  * <div class='norender'><code>
- * let cnv;
- * let d;
- * let g;
+ * let cnv, d, g;
  * function setup() {
  *   cnv = createCanvas(100, 100);
  *   cnv.mouseReleased(changeGray); // attach listener for
@@ -404,10 +392,8 @@ p5.Element.prototype.mouseWheel = function(fxn) {
  * }
  * </code></div>
  *
- *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.mouseReleased = function(fxn) {
   p5.Element._adjustListener('mouseup', fxn, this);
@@ -415,11 +401,10 @@ p5.Element.prototype.mouseReleased = function(fxn) {
 };
 
 /**
- * The .<a href="#/p5.Element/mouseClicked">mouseClicked()</a> function is called once after a mouse button is
- * pressed and released over the element.
- * Some mobile browsers may also trigger this event on a touch screen,
- * if the user performs a quick tap.
- * This can be used to attach element specific event listeners.
+ * The .<a href="#/p5.Element/mouseClicked">mouseClicked()</a> function is
+ * called once after a mouse button is pressed and released over the element.
+ * Some mobile browsers may also trigger this event on a touch screen, if the
+ * user performs a quick tap.This can be used to attach element specific event listeners.
  *
  * @method mouseClicked
  * @param  {Function|Boolean} fxn function to be fired when mouse is
@@ -430,10 +415,7 @@ p5.Element.prototype.mouseReleased = function(fxn) {
  * @example
  * <div class="norender">
  * <code>
- * let cnv;
- * let d;
- * let g;
- *
+ * let cnv, d, g;
  * function setup() {
  *   cnv = createCanvas(100, 100);
  *   cnv.mouseClicked(changeGray); // attach listener for
@@ -463,7 +445,6 @@ p5.Element.prototype.mouseReleased = function(fxn) {
  *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.mouseClicked = function(fxn) {
   p5.Element._adjustListener('click', fxn, this);
@@ -518,10 +499,8 @@ p5.Element.prototype.mouseClicked = function(fxn) {
  * }
  * </code></div>
  *
- *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.mouseMoved = function(fxn) {
   p5.Element._adjustListener('mousemove', fxn, this);
@@ -561,10 +540,8 @@ p5.Element.prototype.mouseMoved = function(fxn) {
  * }
  * </code></div>
  *
- *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.mouseOver = function(fxn) {
   p5.Element._adjustListener('mouseover', fxn, this);
@@ -606,7 +583,6 @@ p5.Element.prototype.mouseOver = function(fxn) {
  *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.mouseOut = function(fxn) {
   p5.Element._adjustListener('mouseout', fxn, this);
@@ -654,7 +630,6 @@ p5.Element.prototype.mouseOut = function(fxn) {
  *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.touchStarted = function(fxn) {
   p5.Element._adjustListener('touchstart', fxn, this);
@@ -694,7 +669,6 @@ p5.Element.prototype.touchStarted = function(fxn) {
  *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.touchMoved = function(fxn) {
   p5.Element._adjustListener('touchmove', fxn, this);
@@ -740,10 +714,8 @@ p5.Element.prototype.touchMoved = function(fxn) {
  * }
  * </code></div>
  *
- *
  * @alt
  * no display.
- *
  */
 p5.Element.prototype.touchEnded = function(fxn) {
   p5.Element._adjustListener('touchend', fxn, this);
@@ -854,7 +826,6 @@ p5.Element._detachListener = function(ev, ctx) {
 
 /**
  * Helper fxn for sharing pixel methods
- *
  */
 p5.Element.prototype._setProperty = function(prop, value) {
   this[prop] = value;
